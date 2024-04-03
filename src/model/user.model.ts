@@ -9,7 +9,7 @@ export class User {
   username: string
 }
 
-export class CreateUserDto {
+export class CreateUserRequest {
   @IsNotEmpty()
   @Validate(UserNotExist)
   username: string
