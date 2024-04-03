@@ -12,9 +12,8 @@ export class UserNotExist implements ValidatorConstraintInterface {
   constructor(private readonly userRepository: UserRepository) {}
 
   async validate(username: string): Promise<boolean> {
-    console.log('appRepository=' + this.userRepository)
-
-    return username !== 'TEST'
+    const exists = await this.userRepository.exists(username)
+    return !exists
   }
 
   defaultMessage(args: ValidationArguments) {
