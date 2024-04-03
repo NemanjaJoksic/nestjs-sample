@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { plainToInstance } from 'class-transformer'
+import { UserEntity } from 'src/database/user.entity'
 import { UserRepository } from 'src/database/user.repository'
 import { CreateUserDto, User } from 'src/model/user.model'
 import { AppValidator } from 'src/validation/app.validator'
@@ -19,10 +20,11 @@ export class UserService {
   async create(createUserDto: CreateUserDto): Promise<User> {
     await this.appValidator.validate(createUserDto)
 
-    const user = new User()
-    user.id = 123
-    user.username = createUserDto.username
+    const userEntity = new UserEntity()
+    userEntity.username = createUserDto.username
+    userEntity.password = createUserDto.password
 
-    return user
+    const createdUserEntity = this.userRepository.create(userEntity)
+    return plainToInstance(User, createdUserEntity)
   }
 }

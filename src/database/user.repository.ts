@@ -9,4 +9,9 @@ export class UserRepository {
       { id: 2, username: 'TEST 2', password: 'yyy' },
     ]
   }
+
+  async create(userEntity: UserEntity): Promise<UserEntity> {
+    userEntity.id = 321
+    return userEntity
+  }
 }
